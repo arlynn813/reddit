@@ -1,12 +1,11 @@
 from datetime import datetime
 from sql import connection_required
-from user import User
 
 
 class Post:
     @classmethod
-    def objects(cls, user=None):
-        entries = cls.__get(user=user)
+    def objects(cls, user=None, exclude=False):
+        entries = cls.__get(user=user, exclude=exclude)
         return [Post(entry['title'], entry['content'], entry['created_at'], entry['user_id'], id_=entry['id']
                      ) for entry in entries]
 
@@ -27,6 +26,7 @@ class Post:
 
     @property
     def user(self):
+        from user import User  # putting this at the top causes circular import error...
         return User.get(self.user_id)
 
     # Do not explicitly call the below methods. These are used internally by the above methods.
@@ -44,10 +44,12 @@ class Post:
     # SQL methods
     @classmethod
     @connection_required()
-    def __get(cls, id_=None, user=None):
+    def __get(cls, id_=None, user=None, exclude=True):
         if id_:
             return f'SELECT * FROM post WHERE id={id_};'
         elif user:
+            if exclude:
+                return f'SELECT * FROM post WHERE user_id!={user.id};'
             return f'SELECT * FROM post WHERE user_id={user.id};'
         return 'SELECT * FROM post;'
 
@@ -61,6 +63,7 @@ class Post:
 
 
 if __name__ == '__main__':
+    from user import User
     user1 = User.create('Andrew', 'Lynn', 'arlynn813', 'arlynn813@gmail.com')
     user2 = User.create('First', 'Last', 'test_username', 'test@test.com')
     Post.create(user1, 'Title 1', 'This is the content of the first post.')
@@ -68,13 +71,11 @@ if __name__ == '__main__':
     Post.create(user2, 'Test Title', 'This is test content.')
 
     print('testing posts from user1 query')
-    user1_posts = Post.objects(user=user1)
-    for p in user1_posts:
+    for p in user1.posts:
         print(p)
 
     print('testing posts from user2 query')
-    user2_posts = Post.objects(user=user2)
-    for p in user2_posts:
+    for p in user2.posts:
         print(p)
 
     print('testing all posts query')

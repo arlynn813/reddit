@@ -1,3 +1,4 @@
+from post import Post
 from sql import connection_required
 
 
@@ -21,6 +22,17 @@ class User:
     def delete(self):
         # TODO: cascade delete (all of this user's posts and votes should also be deleted)
         self.__delete()
+
+    def post(self, title, content):
+        Post.create(self, title, content)
+
+    @property
+    def posts(self):
+        return Post.objects(user=self)
+
+    @property
+    def feed(self):
+        return Post.objects(user=self, exclude=True)
 
     # Do not explicitly call the below methods. These are used internally by the above methods.
     # For example, calling init will not store the object in the database.
@@ -49,10 +61,21 @@ class User:
 
 
 if __name__ == "__main__":
-    test_user = User.create('Andrew', 'Lynn', 'arlynn813', 'arlynn813@gmail.com')  # creates a new entry in the user table and returns user object
-    users = User.objects()  # returns a list of user objects from all entries stored in user table
-    print([u.username for u in users])
-    user = User.get(id_=test_user.id)  # returns a single user object given by id from user table
-    print(user.username)
-    user.delete()
-    print(User.objects())
+    user = User.create('Andrew', 'Lynn', 'arlynn813', 'arlynn813@gmail.com')
+    user.post('Title 1', 'test')
+    user.post('Title 2', 'test')
+
+    user2 = User.create('First', 'Last', 'username', 'test@test.com')
+    user2.post('Title 1', 'test')
+
+    print('\nuser posts')
+    for p in user.posts:
+        print(p)
+
+    print('\nuser2 posts')
+    for p in user2.posts:
+        print(p)
+
+    print('\nuser2 feed')
+    for p in user2.feed:
+        print(p)
