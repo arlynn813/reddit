@@ -1,3 +1,4 @@
+import hashlib
 from post import Post
 from sql import connection_required
 
@@ -41,7 +42,7 @@ class User:
         self.last_name = last_name
         self.username = username
         self.email = email
-        self.id = hash(username)
+        self.id = hashlib.sha1(username.encode('utf-8')).hexdigest()
 
     # SQL methods
     @classmethod
