@@ -11,10 +11,11 @@ class User:
 
     @classmethod
     def get(cls, id_):
-        entry = cls.__get(id_=id_)
-        if entry:
-            return User(entry[0]['first_name'], entry[0]['last_name'], entry[0]['username'], entry[0]['email'])
-        return None
+        try:
+            entry = cls.__get(id_=id_)[0]
+        except IndexError:
+            return None
+        return User(entry['first_name'], entry['last_name'], entry['username'], entry['email'])
 
     @classmethod
     def create(cls, first_name, last_name, username, email):
@@ -45,6 +46,9 @@ class User:
         self.username = username
         self.email = email
         self.id = hashlib.sha1(username.encode('utf-8')).hexdigest()
+
+    def __str__(self):
+        return self.username
 
     # SQL methods
     @classmethod

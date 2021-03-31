@@ -11,7 +11,10 @@ class Post:
 
     @classmethod
     def get(cls, id_):
-        entry = cls.__get(id_=id_)[0]
+        try:
+            entry = cls.__get(id_=id_)[0]
+        except IndexError:
+            return None
         return Post(entry['title'], entry['content'], entry['created_at'], entry['user_id'], id_=entry['id'])
 
     @classmethod
@@ -44,7 +47,7 @@ class Post:
     # SQL methods
     @classmethod
     @connection_required()
-    def __get(cls, id_=None, user=None, exclude=True):
+    def __get(cls, id_=None, user=None, exclude=False):
         if id_:
             return f'SELECT * FROM post WHERE id={id_};'
         elif user:
