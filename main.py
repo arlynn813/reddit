@@ -19,7 +19,12 @@ def register():
 
 @app.route('/<user_id>/feed', methods=['GET'])
 def feed(user_id):
-    return f'Render feed for {user_id}...'
+    return render_template('feed.html', user=User.get(user_id))
+
+
+@app.route('/<user_id>/profile', methods=['GET'])
+def profile(user_id):
+    return render_template('profile.html', user=User.get(user_id))
 
 
 if __name__ == '__main__':
