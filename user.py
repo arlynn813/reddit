@@ -11,8 +11,10 @@ class User:
 
     @classmethod
     def get(cls, id_):
-        entry = cls.__get(id_=id_)[0]
-        return User(entry['first_name'], entry['last_name'], entry['username'], entry['email'])
+        entry = cls.__get(id_=id_)
+        if entry:
+            return User(entry[0]['first_name'], entry[0]['last_name'], entry[0]['username'], entry[0]['email'])
+        return None
 
     @classmethod
     def create(cls, first_name, last_name, username, email):
@@ -49,7 +51,7 @@ class User:
     @connection_required()
     def __get(cls, id_=None):
         if id_:
-            return f'SELECT * FROM user WHERE id={id_};'
+            return f'SELECT * FROM user WHERE id="{id_}";'
         return f'SELECT * FROM user;'
 
     @connection_required(commit=True)
@@ -58,7 +60,7 @@ class User:
 
     @connection_required(commit=True)
     def __delete(self):
-        return f'DELETE FROM user WHERE id={self.id};'
+        return f'DELETE FROM user WHERE id="{self.id}";'
 
 
 if __name__ == "__main__":
