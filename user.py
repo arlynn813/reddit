@@ -5,12 +5,12 @@ class User:
     @classmethod
     def objects(cls):
         entries = cls.__get()
-        return [User(entry[0], entry[1], entry[2], entry[3]) for entry in entries]
+        return [User(entry['first_name'], entry['last_name'], entry['username'], entry['email']) for entry in entries]
 
     @classmethod
     def get(cls, id_):
         entry = cls.__get(id_=id_)[0]
-        return User(entry[0], entry[1], entry[2], entry[3])
+        return User(entry['first_name'], entry['last_name'], entry['username'], entry['email'])
 
     @classmethod
     def create(cls, first_name, last_name, username, email):

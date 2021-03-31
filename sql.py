@@ -6,6 +6,7 @@ def connection_required(commit=False):
     def connection(func):
         def wrapper(*args, **kwargs):
             con = sqlite3.connect('data/database.db')
+            con.row_factory = sqlite3.Row  # sets fetch commands to return dicts instead of tuples
             cur = con.cursor()
             instruction = func(*args, **kwargs)
             if instruction:
