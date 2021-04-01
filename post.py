@@ -25,7 +25,9 @@ class Post:
         return post  # note: this object does not contain the sql auto generated primary key...
 
     def delete(self):
-        # TODO: cascade delete (all votes on this post should also be deleted)
+        # TODO: Test cascade delete
+        for vote in Vote.objects(post=self):
+            vote.delete()
         self.__delete()
 
     @property
@@ -68,8 +70,8 @@ class Post:
 
 class Vote:
     @classmethod
-    def objects(cls, post=None):
-        entries = cls.__get(post=post)
+    def objects(cls, post=None, user=None):
+        entries = cls.__get(post=post, user=user)
         return [Vote(entry['value'], entry['user_id'], entry['post_id'], id_=entry['id']) for entry in entries]
 
     @classmethod
@@ -98,11 +100,13 @@ class Vote:
     # SQL methods
     @classmethod
     @connection_required()
-    def __get(cls, id_=None, post=None):
+    def __get(cls, id_=None, post=None, user=None):
         if id_:
             return f'SELECT * FROM vote WHERE id={id_};'
         elif post:
             return f'SELECT * FROM vote WHERE post_id={post.id};'
+        elif user:
+            return f'SELECT * FROM vote WHERE user_id={user.id};'
         return 'SELECT * FROM vote;'
 
     @connection_required(commit=True)

@@ -1,5 +1,5 @@
 import hashlib
-from post import Post
+from post import Post, Vote
 from sql import connection_required
 
 
@@ -24,7 +24,11 @@ class User:
         return user
 
     def delete(self):
-        # TODO: cascade delete (all of this user's posts and votes should also be deleted)
+        # TODO: Test cascade delete...
+        for vote in Vote.objects(user=self):
+            vote.delete()
+        for post in self.posts:
+            post.delet()
         self.__delete()
 
     def post(self, title, content):
