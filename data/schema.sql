@@ -1,6 +1,6 @@
 PRAGMA foreign_keys = ON;
 
-CREATE TABLE user(
+CREATE TABLE User(
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     username TEXT NOT NULL,
@@ -9,19 +9,20 @@ CREATE TABLE user(
     UNIQUE(username, email)
 );
 
-CREATE TABLE post(
+CREATE TABLE Post(
     title TEXT NOT NULL,
     content TEXT NOT NULL,
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    user_id INTEGER NOT NULL,  -- users post articles
+    user_id TEXT NOT NULL,  -- users post articles
     FOREIGN KEY(user_id) REFERENCES user(id)
 );
 
-CREATE TABLE vote(
+CREATE TABLE Vote(
     value INTEGER NOT NULL,  -- -1 for downvote, 1 for upvote
-    user_id INTEGER NOT NULL,  -- user can only vote once per post
+    user_id TEXT NOT NULL,  -- user can only vote once per post
     post_id INTEGER NOT NULL,  -- vote is placed on post
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     FOREIGN KEY(user_id) REFERENCES user(id),
     FOREIGN KEY(post_id) REFERENCES post(id)
 );
