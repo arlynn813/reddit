@@ -2,4 +2,12 @@
 
 {% block content %}
     <a href="{{ url_for('profile', user_id=user.id) }}">{{ user }}</a>
-{% endblock %}
+    <hr>
+    {% for post in user.feed %}
+        <a href="{{ url_for('post', post_id=post.id) }}">
+            <span>{{ post.title }}</span><br>
+            <span>{{ post.user }}</span><br>
+        </a>
+        <hr>
+    {% endfor %}
+{% endblock content %}
