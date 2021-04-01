@@ -7,6 +7,7 @@
         <a href="{{ url_for('post', post_id=post.id) }}">
             <span>{{ post.title }}</span><br>
             <span>{{ post.user }}</span><br>
+            <span>{{ post.created_at }}</span><br>
         </a>
         <hr>
     {% endfor %}

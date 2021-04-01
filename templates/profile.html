@@ -1,5 +1,16 @@
 {% extends 'index.html' %}
 
 {% block content %}
-    <a href="{{ url_for('create', user_id=user.id) }}"><button>CREATE</button></a>
+    <a href="{{ url_for('create', user_id=user.id) }}"><button>CREATE</button></a> <br>
+    {% if user.posts %}
+        {% for post in user.posts %}
+        <a href="{{ url_for('post', post_id=post.id) }}">
+            <span>{{ post.title }}</span> <br>
+            <span>{{ post.user }}</span><br>
+            <span>{{ post.created_at }}</span><br>
+        </a>
+        {% endfor %}
+    {% else %}
+        <span> No posts yet... Create one! </span>
+    {% endif %}
 {% endblock content %}
