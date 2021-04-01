@@ -52,13 +52,13 @@ class Post:
             return f'SELECT * FROM post WHERE id={id_};'
         elif user:
             if exclude:
-                return f'SELECT * FROM post WHERE user_id!={user.id};'
-            return f'SELECT * FROM post WHERE user_id={user.id};'
+                return f'SELECT * FROM post WHERE user_id!="{user.id}";'
+            return f'SELECT * FROM post WHERE user_id="{user.id}";'
         return 'SELECT * FROM post;'
 
     @connection_required(commit=True)
     def __create(self):
-        return f'INSERT INTO post (title, content, user_id) VALUES("{self.title}", "{self.content}", {self.user_id});'
+        return f'INSERT INTO post (title, content, user_id) VALUES("{self.title}", "{self.content}", "{self.user_id}");'
 
     @connection_required(commit=True)
     def __delete(self):

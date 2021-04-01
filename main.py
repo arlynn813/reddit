@@ -27,5 +27,14 @@ def profile(user_id):
     return render_template('profile.html', user=User.get(user_id))
 
 
+@app.route('/<user_id>/create', methods=['GET', 'POST'])
+def create(user_id):
+    user = User.get(user_id)
+    if request.method == 'POST':
+        user.post(request.form['title'], request.form['content'])
+        return redirect(url_for('profile', user_id=user_id))
+    return render_template('create.html', user=user)
+
+
 if __name__ == '__main__':
     app.run(host='localhost', port=8000, debug=True)
