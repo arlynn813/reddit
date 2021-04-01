@@ -1,5 +1,6 @@
 import hashlib
 from flask import Flask, redirect, request, render_template, url_for
+from post import Post
 from user import User
 
 app = Flask(__name__, static_folder='styles')
@@ -34,6 +35,11 @@ def create(user_id):
         user.post(request.form['title'], request.form['content'])
         return redirect(url_for('profile', user_id=user_id))
     return render_template('create.html', user=user)
+
+
+@app.route('/posts/<post_id>', methods=['GET'])
+def post(post_id):
+    return render_template('post.html', post=Post.get(post_id))
 
 
 if __name__ == '__main__':
