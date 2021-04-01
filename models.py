@@ -1,5 +1,74 @@
+import hashlib
 from datetime import datetime
 from sql import connection_required
+
+
+class User:
+    @classmethod
+    def objects(cls):
+        entries = cls.__get()
+        return [User(entry['first_name'], entry['last_name'], entry['username'], entry['email']) for entry in entries]
+
+    @classmethod
+    def get(cls, id_):
+        try:
+            entry = cls.__get(id_=id_)[0]
+        except IndexError:
+            return None
+        return User(entry['first_name'], entry['last_name'], entry['username'], entry['email'])
+
+    @classmethod
+    def create(cls, first_name, last_name, username, email):
+        user = User(first_name, last_name, username, email)
+        user.__create()
+        return user
+
+    def delete(self):
+        # TODO: Test cascade delete...
+        for vote in Vote.objects(user=self):
+            vote.delete()
+        for post in self.posts:
+            post.delet()
+        self.__delete()
+
+    def post(self, title, content):
+        Post.create(self, title, content)
+
+    @property
+    def posts(self):
+        return Post.objects(user=self)
+
+    @property
+    def feed(self):
+        return Post.objects(user=self, exclude=True)
+
+    # Do not explicitly call the below methods. These are used internally by the above methods.
+    # For example, calling init will not store the object in the database.
+    def __init__(self, first_name, last_name, username, email):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.username = username
+        self.email = email
+        self.id = hashlib.sha1(username.encode('utf-8')).hexdigest()
+
+    def __str__(self):
+        return self.username
+
+    # SQL methods
+    @classmethod
+    @connection_required()
+    def __get(cls, id_=None):
+        if id_:
+            return f'SELECT * FROM user WHERE id="{id_}";'
+        return f'SELECT * FROM user;'
+
+    @connection_required(commit=True)
+    def __create(self):
+        return f'INSERT INTO user VALUES("{self.first_name}", "{self.last_name}", "{self.username}", "{self.email}", "{self.id}");'
+
+    @connection_required(commit=True)
+    def __delete(self):
+        return f'DELETE FROM user WHERE id="{self.id}";'
 
 
 class Post:
@@ -32,7 +101,6 @@ class Post:
 
     @property
     def user(self):
-        from user import User  # putting this at the top causes circular import error...
         return User.get(self.user_id)
 
     # Do not explicitly call the below methods. These are used internally by the above methods.
@@ -116,40 +184,3 @@ class Vote:
     @connection_required(commit=True)
     def __delete(self):
         return f'DELETE FROM vote WHERE id={self.id};'
-
-
-if __name__ == '__main__':
-    """
-    from user import User
-    user1 = User.create('Andrew', 'Lynn', 'arlynn813', 'arlynn813@gmail.com')
-    user2 = User.create('First', 'Last', 'test_username', 'test@test.com')
-    Post.create(user1, 'Title 1', 'This is the content of the first post.')
-    Post.create(user1, 'Title 2', 'This is the content of the second post.')
-    Post.create(user2, 'Test Title', 'This is test content.')
-
-    print('testing posts from user1 query')
-    for p in user1.posts:
-        print(p)
-
-    print('testing posts from user2 query')
-    for p in user2.posts:
-        print(p)
-
-    print('testing all posts query')
-    all_posts = Post.objects()
-    for p in all_posts:
-        print(p)
-
-    print('testing delete')
-    for p in all_posts:
-        p.delete()
-    print(Post.objects())
-    """
-    from user import User
-    from post import Post, Vote
-
-    vote = Vote.get(1)
-    print('VOTE: ', vote)
-    vote.delete()
-    print(Vote.objects())
-

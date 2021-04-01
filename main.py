@@ -1,7 +1,6 @@
 import hashlib
 from flask import Flask, redirect, request, render_template, url_for
-from post import Post
-from user import User
+from models import Post, User
 
 app = Flask(__name__, static_folder='styles')
 
