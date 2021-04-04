@@ -2,7 +2,10 @@ import hashlib
 from flask import Flask, redirect, request, render_template, url_for
 from models import Post, User
 
-app = Flask(__name__, static_folder='styles')
+
+# TODO: Fix static_folder argument. Currently waiting on instructor answer on piazza...
+# Fixing this argument also entails resolving file paths in index.html
+app = Flask(__name__, static_folder='scripts')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -39,6 +42,15 @@ def create(user_id):
 @app.route('/posts/<post_id>', methods=['GET'])
 def post(post_id):
     return render_template('post.html', post=Post.get(post_id))
+
+
+# AJAX routes - Do not directly render these functions.
+# AJAX routes are used internally in scripts
+@app.route('/<user_id>/profile/<post_id>/delete', methods=['GET'])
+def delete_post(user_id, post_id):
+    post = Post.get(post_id)
+    post.delete()
+    return {}
 
 
 if __name__ == '__main__':
