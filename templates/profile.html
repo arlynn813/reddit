@@ -16,8 +16,8 @@
                     <span>{{ post.created_at }}</span><br>
                 </a>
                 <button name="delete" value="{{ post.id }}">DELETE</button>
+                <hr>
             </div>
-        <hr>
         {% endfor %}
     {% else %}
         <span> No posts yet... Create one! </span>
