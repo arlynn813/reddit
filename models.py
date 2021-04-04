@@ -28,7 +28,7 @@ class User:
         for vote in Vote.objects(user=self):
             vote.delete()
         for post in self.posts:
-            post.delet()
+            post.delete()
         self.__delete()
 
     def post(self, title, content):
