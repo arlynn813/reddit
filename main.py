@@ -41,7 +41,9 @@ def create(user_id):
 
 @app.route('/posts/<post_id>', methods=['GET'])
 def post(post_id):
-    return render_template('post.html', post=Post.get(post_id))
+    p = Post.get(post_id)
+    v = Vote.get(post=p, user=User.get(session['user_id']))
+    return render_template('post.html', post=p, vote=v)
 
 
 # AJAX routes - Do not directly render these functions.

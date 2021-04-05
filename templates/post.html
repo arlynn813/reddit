@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-    <button id="upvote">UPVOTE</button>
+    <button id="upvote" {% if vote and vote.value == 1 %}style="background-color: red"{% endif %}>UPVOTE</button>
     <span id="vote_count">{{ post.vote_count }}</span>
-    <button id="downvote">DOWNVOTE</button>
+    <button id="downvote" {% if vote and vote.value == -1 %}style="background-color: red"{% endif %}>DOWNVOTE</button>
     <hr>
     <span>{{ post.title }}</span>
     <hr>
