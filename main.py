@@ -1,11 +1,10 @@
 import hashlib
-from flask import Flask, redirect, request, render_template, url_for
-from models import Post, User
+from flask import Flask, jsonify, redirect, request, render_template, session, url_for
+from models import Post, User, Vote
 
 
-# TODO: Fix static_folder argument. Currently waiting on instructor answer on piazza...
-# Fixing this argument also entails resolving file paths in index.html
-app = Flask(__name__, static_folder='scripts')
+app = Flask(__name__, static_folder='')
+app.secret_key = '8e55e0f12a92a2a38a084ef464f68415'  # generated from secrets.token_hex(16) in python console
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -16,6 +15,7 @@ def register():
         if not user:
             user = User.create(request.form['first_name'], request.form['last_name'], request.form['username'],
                                request.form['email'])
+        session['user_id'] = user.id
         return redirect(url_for('feed', user_id=user.id))
     return render_template('register.html')
 
@@ -48,9 +48,24 @@ def post(post_id):
 # AJAX routes are used internally in scripts
 @app.route('/<user_id>/profile/<post_id>/delete', methods=['GET'])
 def delete_post(user_id, post_id):
-    post = Post.get(post_id)
-    post.delete()
-    return {}
+    p = Post.get(post_id)
+    if session['user_id'] == user_id:
+        p.delete()
+        return 'success', 200
+    return 'failure', 500
+
+
+@app.route('/posts/<post_id>/vote', methods=['POST'])
+def vote(post_id):
+    p = Post.get(post_id)
+    user = User.get(session['user_id'])
+    v = Vote.get(post=p, user=user)
+    if not v:
+        v = Vote.create(p, request.form['value'], user)
+    print('updating vote')
+    v.update(request.form['value'])
+    print('returning response')
+    return jsonify(vote_value=p.vote_count)
 
 
 if __name__ == '__main__':

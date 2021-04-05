@@ -25,7 +25,7 @@ class User:
 
     def delete(self):
         # TODO: Test cascade delete...
-        for vote in Vote.objects(user=self):
+        for vote in self.votes:
             vote.delete()
         for post in self.posts:
             post.delete()
@@ -33,6 +33,10 @@ class User:
 
     def post(self, title, content):
         Post.create(self, title, content)
+
+    @property
+    def votes(self):
+        return Vote.objects(user=self)
 
     @property
     def posts(self):
@@ -95,13 +99,21 @@ class Post:
 
     def delete(self):
         # TODO: Test cascade delete
-        for vote in Vote.objects(post=self):
+        for vote in self.votes:
             vote.delete()
         self.__delete()
 
     @property
     def user(self):
         return User.get(self.user_id)
+
+    @property
+    def vote_count(self):
+        return sum([vote.value for vote in Vote.objects(post=self)])
+
+    @property
+    def votes(self):
+        return Vote.objects(post=self)
 
     # Do not explicitly call the below methods. These are used internally by the above methods.
     # For example, calling init will not store the object in the database.
@@ -143,21 +155,25 @@ class Vote:
         return [Vote(entry['value'], entry['user_id'], entry['post_id'], id_=entry['id']) for entry in entries]
 
     @classmethod
-    def get(cls, id_):
+    def get(cls, id_=None, post=None, user=None):
         try:
-            entry = cls.__get(id_=id_)[0]
+            entry = cls.__get(id_=id_, post=post, user=user)[0]
         except IndexError:
             return None
         return Vote(entry['value'], entry['user_id'], entry['post_id'], id_=entry['id'])
 
     @classmethod
-    def create(cls, post, value):
-        vote = Vote(value, post.user.id, post.id)
+    def create(cls, post, value, user):
+        vote = Vote(value, user.id, post.id)
         vote.__create()
         return vote  # note: this object does not contain the sql auto generated primary key...
 
     def delete(self):
         self.__delete()
+
+    def update(self, value):
+        self.value = value
+        self.__update()
 
     def __init__(self, value, user_id, post_id, id_=None):
         self.value = value
@@ -171,6 +187,8 @@ class Vote:
     def __get(cls, id_=None, post=None, user=None):
         if id_:
             return f'SELECT * FROM vote WHERE id={id_};'
+        elif post and user:
+            return f'SELECT * FROM vote WHERE post_id={post.id} AND user_id="{user.id}";'
         elif post:
             return f'SELECT * FROM vote WHERE post_id={post.id};'
         elif user:
@@ -184,3 +202,7 @@ class Vote:
     @connection_required(commit=True)
     def __delete(self):
         return f'DELETE FROM vote WHERE id={self.id};'
+
+    @connection_required(commit=True)
+    def __update(self):
+        return f'UPDATE vote SET value={self.value} WHERE id={self.id};'

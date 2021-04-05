@@ -1,7 +1,17 @@
 {% extends 'index.html' %}
 
+{% block head %}
+    <meta id="post_id" content="{{ post.id }}">
+{% endblock %}
+
 {% block content %}
+    <button id="upvote">UPVOTE</button>
+    <span id="vote_count">{{ post.vote_count }}</span>
+    <button id="downvote">DOWNVOTE</button>
+    <hr>
     <span>{{ post.title }}</span>
     <hr>
     <span>{{ post.content }}</span>
+
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/post.js') }}"></script>
 {% endblock content %}
