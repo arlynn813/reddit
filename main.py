@@ -48,8 +48,8 @@ def post(post_id):
 # AJAX routes are used internally in scripts
 @app.route('/<user_id>/profile/<post_id>/delete', methods=['GET'])
 def delete_post(user_id, post_id):
-    p = Post.get(post_id)
     if session['user_id'] == user_id:
+        p = Post.get(post_id)
         p.delete()
         return 'success', 200
     return 'failure', 500
@@ -59,10 +59,7 @@ def delete_post(user_id, post_id):
 def vote(post_id):
     p = Post.get(post_id)
     user = User.get(session['user_id'])
-    v = Vote.get(post=p, user=user)
-    if not v:
-        v = Vote.create(p, request.form['value'], user)
-    v.update(request.form['value'])
+    p.vote(user, request.form['value'])
     return jsonify(vote_value=p.vote_count)
 
 

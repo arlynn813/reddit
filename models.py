@@ -103,6 +103,14 @@ class Post:
             vote.delete()
         self.__delete()
 
+    def vote(self, user, value):
+        v = Vote.get(post=self, user=user)
+        if v:
+            v.update(value)
+        else:
+            v = Vote.create(self, value, user)
+        return v
+
     @property
     def user(self):
         return User.get(self.user_id)
