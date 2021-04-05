@@ -62,9 +62,7 @@ def vote(post_id):
     v = Vote.get(post=p, user=user)
     if not v:
         v = Vote.create(p, request.form['value'], user)
-    print('updating vote')
     v.update(request.form['value'])
-    print('returning response')
     return jsonify(vote_value=p.vote_count)
 
 
