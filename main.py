@@ -1,5 +1,5 @@
 import hashlib
-from flask import Flask, jsonify, redirect, request, render_template, session, url_for
+from flask import Flask, jsonify, redirect, request, render_template, send_file, session, url_for
 from models import Post, User, Vote
 
 
@@ -44,6 +44,14 @@ def post(post_id):
     p = Post.get(post_id)
     v = Vote.get(post=p, user=User.get(session['user_id']))
     return render_template('post.html', post=p, vote=v)
+
+
+@app.route('/getTSVdump', methods=['GET'])
+def tsv():
+    User.generate_tsv()
+    Post.generate_tsv()
+    Vote.generate_tsv()
+    return render_template('tsv.html')
 
 
 # AJAX routes - Do not directly render these functions.

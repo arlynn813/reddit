@@ -23,6 +23,13 @@ class User:
         user.__create()
         return user
 
+    @classmethod
+    def generate_tsv(cls):
+        with open('data/user.tsv', 'w') as fp:
+            fp.write('\t'.join(['first_name', 'last_name', 'username', 'email', 'id']) + '\n')
+            for u in User.objects():
+                fp.write('\t'.join([u.first_name, u.last_name, u.username, u.email, u.id]) + '\n')
+
     def delete(self):
         # TODO: Test cascade delete...
         for vote in self.votes:
@@ -96,6 +103,13 @@ class Post:
         post = Post(title, content, datetime.now(), user.id)
         post.__create()
         return post  # note: this object does not contain the sql auto generated primary key...
+
+    @classmethod
+    def generate_tsv(cls):
+        with open('data/post.tsv', 'w') as fp:
+            fp.write('\t'.join(['title', 'content', 'id', 'created_at', 'user_id']) + '\n')
+            for p in Post.objects():
+                fp.write('\t'.join([p.title, p.content, str(p.id), p.created_at, p.user_id]) + '\n')
 
     def delete(self):
         # TODO: Test cascade delete
@@ -175,6 +189,13 @@ class Vote:
         vote = Vote(value, user.id, post.id)
         vote.__create()
         return vote  # note: this object does not contain the sql auto generated primary key...
+
+    @classmethod
+    def generate_tsv(cls):
+        with open('data/vote.tsv', 'w') as fp:
+            fp.write('\t'.join(['value', 'user_id', 'post_id', 'id']) + '\n')
+            for v in Vote.objects():
+                fp.write('\t'.join([v.value, v.user_id, str(v.post_id), str(v.id)]) + '\n')
 
     def delete(self):
         self.__delete()

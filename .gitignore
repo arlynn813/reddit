@@ -6,3 +6,6 @@
 
 # SQL
 data/*.db
+
+# Auto-generated reports
+data/*.tsv
