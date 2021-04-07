@@ -2,6 +2,8 @@
 
 {% block head %}
     <meta id="user_id" content="{{ user.id }}">
+    <!-- This page counter is changed dynamically in profile.js -->
+    <meta id="page" content="0">
 {% endblock %}
 
 {% block content %}
@@ -9,7 +11,7 @@
     <hr>
     {% if user.posts %}
         {% for post in user.posts %}
-            <div id="{{ post.id }}">
+            <div id="{{ post.id }}" class="feed-post">
                 <a href="{{ url_for('post', post_id=post.id) }}">
                     <span>{{ post.title }}</span> <br>
                     <span>{{ post.user }}</span><br>
@@ -19,9 +21,12 @@
                 <hr>
             </div>
         {% endfor %}
+        <button id="previous">Previous</button>
+        <button id="next">Next</button>
     {% else %}
         <span> No posts yet... Create one! </span>
     {% endif %}
 
 <script type="text/javascript" src="{{ url_for('static', filename='scripts/profile.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/pagination.js') }}"></script>
 {% endblock content %}

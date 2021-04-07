@@ -1,9 +1,10 @@
 import hashlib
-from flask import Flask, jsonify, redirect, request, render_template, send_file, session, url_for
+from flask import Flask, jsonify, redirect, request, render_template, session, url_for
 from models import Post, User, Vote
 
 
 app = Flask(__name__, static_folder='')
+# We would normally hide the secret in an environment variable or dev_secret.py (outside of VCS).
 app.secret_key = '8e55e0f12a92a2a38a084ef464f68415'  # generated from secrets.token_hex(16) in python console
 
 
