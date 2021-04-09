@@ -10,13 +10,14 @@
     <a href="{{ url_for('create', user_id=user.id) }}"><button>CREATE</button></a> <br>
     <hr>
     <img src="{{ url_for('static', filename=user.picture_path) }}">
+    <hr>
     {% if user.posts %}
         {% for post in user.posts %}
             <div id="{{ post.id }}" class="feed-post">
                 <a href="{{ url_for('post', post_id=post.id) }}">
                     <span>{{ post.title }}</span> <br>
                     <span>{{ post.user }}</span><br>
-                    <span>{{ post.created_at }}</span><br>
+                    <span>{{ post.timestamp }}</span><br>
                 </a>
                 <button name="delete" value="{{ post.id }}">DELETE</button>
                 <hr>

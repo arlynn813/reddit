@@ -141,6 +141,32 @@ class Post:
     def votes(self):
         return Vote.objects(post=self)
 
+    @property
+    def timestamp(self):
+        time_delta = datetime.utcnow() - datetime.strptime(self.created_at, '%Y-%m-%d %H:%M:%S')
+        minutes_difference = time_delta.total_seconds() // 60
+        hours_difference = 0
+
+        # TODO: remove these print after prolonged testing
+        print(time_delta)
+        print(minutes_difference)
+        print(hours_difference)
+
+        # Convert minutes to hours
+        while minutes_difference >= 60:
+            hours_difference += 1
+            minutes_difference -= 60
+        if minutes_difference >= 30:
+            hours_difference += 1
+
+        if hours_difference > 1:
+            return f'{hours_difference} hours ago.'
+        elif hours_difference == 1:
+            return '1 hour ago.'
+        elif minutes_difference > 1:
+            return f'{minutes_difference} minutes ago.'
+        return '1 minute ago.'
+
     # Do not explicitly call the below methods. These are used internally by the above methods.
     # For example, calling init will not store the object in the database.
     def __init__(self, title, content, created_at, user_id, id_=None):
