@@ -1,4 +1,5 @@
 import hashlib
+import os
 from datetime import datetime
 from sql import connection_required
 
@@ -52,6 +53,10 @@ class User:
     @property
     def feed(self):
         return Post.objects(user=self, exclude=True)
+
+    @property
+    def picture_path(self):
+        return os.path.join('img', self.id, self.picture_filename)
 
     # Do not explicitly call the below methods. These are used internally by the above methods.
     # For example, calling init will not store the object in the database.

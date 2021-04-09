@@ -9,6 +9,7 @@
 {% block content %}
     <a href="{{ url_for('create', user_id=user.id) }}"><button>CREATE</button></a> <br>
     <hr>
+    <img src="{{ url_for('static', filename=user.picture_path) }}">
     {% if user.posts %}
         {% for post in user.posts %}
             <div id="{{ post.id }}" class="feed-post">
