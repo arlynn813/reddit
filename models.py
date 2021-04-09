@@ -7,7 +7,7 @@ class User:
     @classmethod
     def objects(cls):
         entries = cls.__get()
-        return [User(entry['username'], entry['email']) for entry in entries]
+        return [User(entry['username'], entry['email'], entry['picture']) for entry in entries]
 
     @classmethod
     def get(cls, id_):
@@ -15,11 +15,11 @@ class User:
             entry = cls.__get(id_=id_)[0]
         except IndexError:
             return None
-        return User(entry['username'], entry['email'])
+        return User(entry['username'], entry['email'], entry['picture'])
 
     @classmethod
-    def create(cls, username, email):
-        user = User(username, email)
+    def create(cls, username, email, picture_filename):
+        user = User(username, email, picture_filename)
         user.__create()
         return user
 
@@ -55,9 +55,10 @@ class User:
 
     # Do not explicitly call the below methods. These are used internally by the above methods.
     # For example, calling init will not store the object in the database.
-    def __init__(self, username, email):
+    def __init__(self, username, email, picture_filename):
         self.username = username
         self.email = email
+        self.picture_filename = picture_filename
         self.id = hashlib.sha1(username.encode('utf-8')).hexdigest()
 
     def __str__(self):
@@ -73,7 +74,7 @@ class User:
 
     @connection_required(commit=True)
     def __create(self):
-        return f'INSERT INTO user VALUES("{self.username}", "{self.email}", "{self.id}");'
+        return f'INSERT INTO user VALUES("{self.username}", "{self.email}", "{self.picture_filename}", "{self.id}");'
 
     @connection_required(commit=True)
     def __delete(self):

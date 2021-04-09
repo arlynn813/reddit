@@ -1,9 +1,10 @@
 {% extends 'index.html' %}
 
 {% block content %}
-    <form method="POST" action="/register">
-        <label>Username</label><input type="text" name="username" required><br>
-        <label>Email</label><input type="text" name="email" required><br><br>
+    <form method="POST" action="/register" enctype=multipart/form-data>
+        <label>Username<input type="text" name="username" required></label><br>
+        <label>Email<input type="text" name="email" required></label><br>
+        <label>Profile Picture<input type=file name=picture required></label><br><br>
         <button type="submit">SUBMIT</button>
     </form>
 {% endblock %}

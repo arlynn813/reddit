@@ -9,3 +9,6 @@ data/*.db
 
 # Auto-generated reports
 data/*.tsv
+
+# Dynamic user media
+/img/*

@@ -1,10 +1,14 @@
 import hashlib
+import os
 from flask import Flask, jsonify, redirect, request, render_template, session, url_for
 from models import Post, User, Vote
+from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__, static_folder='')
+app.config['IMG_FOLDER'] = os.path.join(app.root_path, 'img')
 # We would normally hide the secret in an environment variable or dev_secret.py (outside of VCS).
+# Although, I am just letting it sit here since we are not deploying this project to a live server.
 app.secret_key = '8e55e0f12a92a2a38a084ef464f68415'  # generated from secrets.token_hex(16) in python console
 
 
@@ -14,7 +18,11 @@ def register():
         user_id = hashlib.sha1(request.form['username'].encode('utf-8')).hexdigest()
         user = User.get(user_id)
         if not user:
-            user = User.create(request.form['username'], request.form['email'])
+            picture = request.files['picture']
+            picture_filename = picture.filename
+            os.mkdir(os.path.join(app.config['IMG_FOLDER'], user_id))
+            picture.save(os.path.join(app.config['IMG_FOLDER'], user_id, picture_filename))
+            user = User.create(request.form['username'], request.form['email'], picture_filename)
         session['user_id'] = user.id
         return redirect(url_for('feed', user_id=user.id))
     return render_template('register.html')
