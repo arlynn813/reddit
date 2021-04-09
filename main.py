@@ -14,8 +14,7 @@ def register():
         user_id = hashlib.sha1(request.form['username'].encode('utf-8')).hexdigest()
         user = User.get(user_id)
         if not user:
-            user = User.create(request.form['first_name'], request.form['last_name'], request.form['username'],
-                               request.form['email'])
+            user = User.create(request.form['username'], request.form['email'])
         session['user_id'] = user.id
         return redirect(url_for('feed', user_id=user.id))
     return render_template('register.html')

@@ -7,7 +7,7 @@ class User:
     @classmethod
     def objects(cls):
         entries = cls.__get()
-        return [User(entry['first_name'], entry['last_name'], entry['username'], entry['email']) for entry in entries]
+        return [User(entry['username'], entry['email']) for entry in entries]
 
     @classmethod
     def get(cls, id_):
@@ -15,20 +15,20 @@ class User:
             entry = cls.__get(id_=id_)[0]
         except IndexError:
             return None
-        return User(entry['first_name'], entry['last_name'], entry['username'], entry['email'])
+        return User(entry['username'], entry['email'])
 
     @classmethod
-    def create(cls, first_name, last_name, username, email):
-        user = User(first_name, last_name, username, email)
+    def create(cls, username, email):
+        user = User(username, email)
         user.__create()
         return user
 
     @classmethod
     def generate_tsv(cls):
         with open('data/user.tsv', 'w') as fp:
-            fp.write('\t'.join(['first_name', 'last_name', 'username', 'email', 'id']) + '\n')
+            fp.write('\t'.join(['username', 'email', 'id']) + '\n')
             for u in User.objects():
-                fp.write('\t'.join([u.first_name, u.last_name, u.username, u.email, u.id]) + '\n')
+                fp.write('\t'.join([u.username, u.email, u.id]) + '\n')
 
     def delete(self):
         # TODO: Test cascade delete...
@@ -55,9 +55,7 @@ class User:
 
     # Do not explicitly call the below methods. These are used internally by the above methods.
     # For example, calling init will not store the object in the database.
-    def __init__(self, first_name, last_name, username, email):
-        self.first_name = first_name
-        self.last_name = last_name
+    def __init__(self, username, email):
         self.username = username
         self.email = email
         self.id = hashlib.sha1(username.encode('utf-8')).hexdigest()
@@ -75,7 +73,7 @@ class User:
 
     @connection_required(commit=True)
     def __create(self):
-        return f'INSERT INTO user VALUES("{self.first_name}", "{self.last_name}", "{self.username}", "{self.email}", "{self.id}");'
+        return f'INSERT INTO user VALUES("{self.username}", "{self.email}", "{self.id}");'
 
     @connection_required(commit=True)
     def __delete(self):

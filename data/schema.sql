@@ -1,8 +1,6 @@
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE User(
-    first_name TEXT NOT NULL,
-    last_name TEXT NOT NULL,
     username TEXT NOT NULL,
     email TEXT NOT NULL,
     id TEXT PRIMARY KEY,  -- will be hashed from username
