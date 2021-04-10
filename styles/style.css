@@ -1,3 +1,24 @@
+/* Global */
+label {
+    margin-right: 10px;
+}
+
+/* Registration */
+#register_form > .row {
+    margin-top: 10px;
+}
+
+.upload-btn {
+    width: 100px;
+    text-align: center;
+    margin: 0;
+    padding: 3px 10px 3px 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Feed and Profile */
 .feed-post {
     display: none;
 }
