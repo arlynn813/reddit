@@ -167,6 +167,12 @@ class Post:
             return f'{minutes_difference} minutes ago.'
         return '1 minute ago.'
 
+    @property
+    def preview(self):
+        if len(self.content) > 300:
+            return self.content[0:300] + '...'
+        return self.content
+
     # Do not explicitly call the below methods. These are used internally by the above methods.
     # For example, calling init will not store the object in the database.
     def __init__(self, title, content, created_at, user_id, id_=None):

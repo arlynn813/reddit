@@ -19,3 +19,9 @@
 .feed-post {
     display: none;
 }
+
+.post-preview-container {
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 10px;
+}

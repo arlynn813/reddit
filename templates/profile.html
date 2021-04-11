@@ -9,15 +9,19 @@
 {% block content %}
     <a href="{{ url_for('create', user_id=user.id) }}"><button>CREATE</button></a> <br>
     <hr>
+<!-- testing styling
     <img src="{{ url_for('static', filename=user.picture_path) }}">
-    <hr>
+    <hr> -->
     {% if user.posts %}
         {% for post in user.posts %}
-            <div id="{{ post.id }}" class="feed-post">
+            <div class="row mx-auto feed-post" id="{{ post.id }}">
                 <a href="{{ url_for('post', post_id=post.id) }}">
-                    <span>{{ post.title }}</span> <br>
-                    <span>{{ post.user }}</span><br>
-                    <span>{{ post.timestamp }}</span><br>
+                    <span>{{ post.title }}</span><br>
+                    <div class="post-preview-container">
+                        <span>{{ post.user }}</span><br>
+                        <span>{{ post.preview }}</span><br>
+                        <span>{{ post.timestamp }}</span><br>
+                    </div>
                 </a>
                 <button name="delete" value="{{ post.id }}">DELETE</button>
                 <hr>

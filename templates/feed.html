@@ -9,11 +9,14 @@
     <a href="{{ url_for('profile', user_id=user.id) }}">{{ user }}</a>
     <hr>
     {% for post in user.feed %}
-        <div class="feed-post">
+        <div class="row mx-auto feed-post">
             <a href="{{ url_for('post', post_id=post.id) }}">
                 <span>{{ post.title }}</span><br>
-                <span>{{ post.user }}</span><br>
-                <span>{{ post.created_at }}</span><br>
+                <div class="post-preview-container">
+                    <span>{{ post.user }}</span><br>
+                    <span>{{ post.preview }}</span><br>
+                    <span>{{ post.created_at }}</span><br>
+                </div>
             </a>
             <hr>
         </div>
