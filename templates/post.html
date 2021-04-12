@@ -9,7 +9,7 @@
 {% block content %}
     <img class="vote-btn" {% if vote and vote.value == 1 %}src="{{ url_for('static', filename='data/arrow-active.png') }}"{% else %}src="{{ url_for('static', filename='data/arrow.png') }}"{% endif %} id="upvote">
     <span id="vote_count">{{ post.vote_count }}</span>
-    <img class="vote-btn downvote" src="{{ url_for('static', filename='data/arrow.png') }}" id="downvote">
+    <img class="vote-btn downvote" {% if vote and vote.value == -1 %}src="{{ url_for('static', filename='data/arrow-active.png') }}"{% else %}src="{{ url_for('static', filename='data/arrow.png') }}"{% endif %} id="downvote">
     <hr>
     <span>{{ post.title }}</span>
     <hr>
