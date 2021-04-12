@@ -1,5 +1,7 @@
 $(document).ready(function() {
     let post_id = $('#post_id').attr('content');
+    let arrow_url = $('#arrow_url').attr('content');
+    let arrow_active_url = $('#arrow_active_url').attr('content');
     let upvote_button = $('#upvote');
     let downvote_button = $('#downvote');
 
@@ -10,8 +12,8 @@ $(document).ready(function() {
             data: {'value': 1},
             success: function(response) {
                update_vote_count(response['vote_value']);
-               upvote_button.css('background-color', 'red');
-               downvote_button.css('background-color', 'white');
+               upvote_button.attr('src', arrow_active_url);
+               downvote_button.attr('src', arrow_url);
             }
         });
     });
@@ -23,8 +25,8 @@ $(document).ready(function() {
            data: {'value': -1},
            success: function(response) {
                update_vote_count(response['vote_value']);
-               downvote_button.css('background-color', 'red');
-               upvote_button.css('background-color', 'white');
+               downvote_button.attr('src', arrow_active_url);
+               upvote_button.attr('src', arrow_url);
            }
        });
     });

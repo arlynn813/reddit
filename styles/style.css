@@ -25,3 +25,13 @@
     border: 2px solid black;
     border-radius: 10px;
 }
+
+/* Post */
+.vote-btn {
+    cursor: pointer;
+    width: 20px;
+}
+
+.downvote {
+    transform: scaleY(-1);
+}
