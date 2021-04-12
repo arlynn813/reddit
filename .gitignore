@@ -12,3 +12,6 @@ data/*.tsv
 
 # Dynamic user media
 /img/*
+
+# GNU Image Manipulation Program
+*.xcf
