@@ -28,9 +28,11 @@
             </div>
         {% endfor %}
         {% if user.posts|length > 5 %}
-            <button id="previous">Previous</button>
-            <span id="page_display">1</span>
-            <button id="next">Next</button>
+            <div class="row justify-content-center mx-auto">
+                <img class="pagination-btn prev" id="previous" src="{{ url_for('static', filename='data/arrow-active.png') }}">
+                <span id="page_display">1</span>
+                <img class="pagination-btn next" id="next" src="{{ url_for('static', filename='data/arrow-active.png') }}">
+            </div>
         {% endif %}
     {% else %}
         <span> No posts yet... Create one! </span>

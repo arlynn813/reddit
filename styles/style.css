@@ -115,6 +115,23 @@ textarea:focus {
     display: none;
 }
 
+.pagination-btn {
+    width: 20px;
+    margin-top: 1px;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+
+.prev {
+    transform: rotate(-90deg);
+    margin-right: 10px;
+}
+
+.next {
+    transform: rotate(90deg);
+    margin-left: 10px;
+}
+
 /* Post */
 .vote-container {
     margin-left: -15px;
