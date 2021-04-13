@@ -146,6 +146,7 @@ class Post:
         time_delta = datetime.utcnow() - datetime.strptime(self.created_at, '%Y-%m-%d %H:%M:%S')
         minutes_difference = time_delta.total_seconds() // 60
         hours_difference = 0
+        days_difference = 0
 
         # TODO: remove these print after prolonged testing
         print(time_delta)
@@ -153,18 +154,25 @@ class Post:
         print(hours_difference)
 
         # Convert minutes to hours
+        while minutes_difference >= 60 * 24:
+            days_difference += 1
+            minutes_difference -= 60 * 24
         while minutes_difference >= 60:
             hours_difference += 1
             minutes_difference -= 60
         if minutes_difference >= 30:
             hours_difference += 1
 
-        if hours_difference > 1:
-            return f'{hours_difference} hours ago.'
+        if days_difference > 1:
+            return f'{int(days_difference)} days ago.'
+        elif days_difference == 1:
+            return '1 day ago.'
+        elif hours_difference > 1:
+            return f'{int(hours_difference)} hours ago.'
         elif hours_difference == 1:
             return '1 hour ago.'
         elif minutes_difference > 1:
-            return f'{minutes_difference} minutes ago.'
+            return f'{int(minutes_difference)} minutes ago.'
         return '1 minute ago.'
 
     @property
