@@ -14,17 +14,20 @@
     <hr> -->
     {% if user.posts %}
         {% for post in user.posts %}
-            <div class="row mx-auto feed-post" id="{{ post.id }}">
+            <div class="feed-post" id="{{ post.id }}">
                 <a href="{{ url_for('post', post_id=post.id) }}">
-                    <span>{{ post.title }}</span><br>
-                    <div class="post-preview-container">
-                        <span>{{ post.user }}</span><br>
-                        <span>{{ post.preview }}</span><br>
-                        <span>{{ post.timestamp }}</span><br>
+                    <div class="row mx-auto">
+                        <div class="col-11">
+                            <span>{{ post.title }} - Posted by {{ post.user }} {{ post.timestamp }}</span>
+                        </div>
+                        <div class="col-1">
+                            <button name="delete" value="{{ post.id }}">DELETE</button>
+                        </div>
+                    </div>
+                    <div class="row mx-auto">
+                        <p class="post-content">{{ post.preview }}</p>
                     </div>
                 </a>
-                <button name="delete" value="{{ post.id }}">DELETE</button>
-                <hr>
             </div>
         {% endfor %}
         <button id="previous">Previous</button>

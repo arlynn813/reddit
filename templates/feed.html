@@ -9,16 +9,15 @@
     <a href="{{ url_for('profile', user_id=user.id) }}">{{ user }}</a>
     <hr>
     {% for post in user.feed %}
-        <div class="row mx-auto feed-post">
+        <div class="feed-post">
             <a href="{{ url_for('post', post_id=post.id) }}">
-                <span>{{ post.title }}</span><br>
-                <div class="post-preview-container">
-                    <span>{{ post.user }}</span><br>
-                    <span>{{ post.preview }}</span><br>
-                    <span>{{ post.timestamp }}</span><br>
+                <div class="row mx-auto">
+                    <span>{{ post.title }} - Posted by {{ post.user }} {{ post.timestamp }}</span>
+                </div>
+                <div class="row mx-auto">
+                    <p class="post-content">{{ post.preview }}</p>
                 </div>
             </a>
-            <hr>
         </div>
     {% endfor %}
     <button id="previous">Previous</button>

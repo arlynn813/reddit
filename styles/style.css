@@ -15,6 +15,15 @@ nav {
     margin-bottom: 30px;
 }
 
+a {
+    color: black;
+    text-decoration: none !important;
+}
+
+a:hover {
+    color: black;
+}
+
 /* Registration */
 #register_form > .row {
     margin-top: 10px;
@@ -33,12 +42,6 @@ nav {
 /* Feed and Profile */
 .feed-post {
     display: none;
-}
-
-.post-preview-container {
-    width: 100%;
-    border: 2px solid black;
-    border-radius: 10px;
 }
 
 /* Post */
@@ -65,7 +68,7 @@ nav {
 
 .post-content {
     width: 100%;
-    margin: 10px 0 20px 45px;
+    margin: 10px 0 50px 45px;
     padding: 10px;
     border: 2px solid black;
     border-radius: 10px;
