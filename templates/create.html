@@ -2,8 +2,24 @@
 
 {% block content %}
     <form method="POST" action="/{{ user.id }}/create">
-        <label>Title</label><input type="text" name="title" required><br>
-        <label>Content</label><textarea name="content" required></textarea><br><br>
-        <button type="submit">SUBMIT</button>
+        <div class="row mx-auto">
+            <div class="col-2 col-lg-1">
+                <label for="title">Title</label>
+            </div>
+            <div class="col-10 col-lg-11">
+                <input class="create-input" type="text" name="title" id="title" required>
+            </div>
+        </div>
+        <div class="row mx-auto">
+            <div class="col-2 col-lg-1">
+                <label for="content">Content</label>
+            </div>
+            <div class="col-10 col-lg-11">
+                <textarea class="create-input" name="content" id="content" required></textarea>
+            </div>
+        </div>
+        <div class="row justify-content-center mx-auto">
+            <button type="submit">SUBMIT</button>
+        </div>
     </form>
 {% endblock content %}

@@ -27,6 +27,14 @@ a:hover {
     color: black;
 }
 
+input:focus {
+    outline-color: #bc5a45;
+}
+
+textarea:focus {
+    outline-color: #bc5a45;
+}
+
 .logo {
     position: fixed;
     top: 5px;
@@ -90,4 +98,10 @@ a:hover {
     padding: 10px;
     border: 2px solid black;
     border-radius: 10px;
+}
+
+/* Create */
+.create-input {
+    width: 100%;
+    margin-bottom: 20px;
 }
