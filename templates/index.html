@@ -23,7 +23,7 @@
                 {% else %}
                        <a href="{{ url_for('profile', user_id=session['user_id']) }}">{{ user }}</a>
                 {% endif %}
-                <a href="{{ url_for('create', user_id=session['user_id']) }}"><button>CREATE</button></a>
+                <a href="{{ url_for('create', user_id=session['user_id']) }}"><button class="btn-nav">CREATE</button></a>
             </div>
         {% endblock %}
     </nav>
