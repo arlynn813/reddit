@@ -10,30 +10,26 @@
             <div class="col-2 col-lg-1">
                 <label for="username">Username</label>
             </div>
-            <div class="col-6 col-lg-3">
-                <input type="text" name="username" id="username" required>
+            <div class="col-7 col-md-5 col-lg-4">
+                <input class="register-input" type="text" name="username" id="username" required>
             </div>
         </div>
         <div class="row justify-content-center mx-auto">
             <div class="col-2 col-lg-1">
                 <label for="email">Email</label>
             </div>
-            <div class="col-6 col-lg-3">
-                <input type="text" name="email" id="email" required>
+            <div class="col-7 col-md-5 col-lg-4">
+                <input class="register-input" type="text" name="email" id="email" required>
             </div>
         </div>
         <div class="row justify-content-center mx-auto">
             <!-- For a custom styled file upload, we hide the input and style the label too look like a button. -->
             <!-- The "for" property in label makes the label click function as an input click. -->
-            <div class="col-4 col-lg-2">
-                <label for="picture" class="upload-btn">Picture</label>
+                <label for="picture" class="btn">Upload Picture</label>
                 <input type=file name=picture id="picture" hidden>
-            </div>
         </div>
         <div class="row justify-content-center mx-auto">
-            <div class="col-4 col-lg-2">
-                <button type="submit">SUBMIT</button>
-            </div>
+            <button class="btn" type="submit">Submit</button>
         </div>
     </form>
 {% endblock %}

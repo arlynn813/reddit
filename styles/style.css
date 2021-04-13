@@ -57,9 +57,46 @@ textarea:focus {
     height: 40px;
 }
 
+.btn {
+    width: 200px;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 3px 10px 3px 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: #bc5a45;
+    color: white;
+    border-color: #bc5a45;
+}
+
+.btn-nav {
+    width: 100px;
+    text-align: center;
+    padding: 0;
+    background-color: #bc5a45;
+    border: 2px solid black;
+    border-radius: 10px;
+    color: black;
+    font-weight: bold;
+}
+
+.btn-nav:hover {
+    background-color: white;
+    color: black;
+    border-color: black;
+}
+
 /* Registration */
-#register_form > .row {
-    margin-top: 10px;
+.register-input {
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .upload-btn {
