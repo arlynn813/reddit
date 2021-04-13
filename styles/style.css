@@ -132,6 +132,30 @@ textarea:focus {
     margin-left: 10px;
 }
 
+.delete-btn {
+    width: 100px;
+    text-align: center;
+    padding: 3px 10px 3px 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    margin-left: 45px;
+}
+
+.delete-btn:hover {
+    background-color: #bc5a45;
+    color: white;
+    border-color: #bc5a45;
+}
+
+.delete-btn-container {
+    margin-top: -40px;
+    margin-bottom: 50px;
+}
+
 /* Post */
 .vote-container {
     margin-left: -15px;
