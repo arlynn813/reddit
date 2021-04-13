@@ -11,12 +11,11 @@
     </a>
     <div class="profile-link">
         <a href="{{ url_for('profile', user_id=user.id) }}">{{ user }}</a>
+        <a href="{{ url_for('create', user_id=session['user_id']) }}"><button>CREATE</button></a>
     </div>
 {% endblock %}
 
 {% block content %}
-    <a href="{{ url_for('profile', user_id=user.id) }}">{{ user }}</a>
-    <hr>
     {% for post in user.feed %}
         <div class="feed-post">
             <a href="{{ url_for('post', post_id=post.id) }}">

@@ -12,15 +12,11 @@
     </a>
     <div class="profile-link">
         <a href="{{ url_for('profile', user_id=session['user_id']) }}">{{ user }}</a>
+        <a href="{{ url_for('create', user_id=session['user_id']) }}"><button>CREATE</button></a>
     </div>
 {% endblock %}
 
 {% block content %}
-    <a href="{{ url_for('create', user_id=user.id) }}"><button>CREATE</button></a> <br>
-    <hr>
-<!-- testing styling
-    <img src="{{ url_for('static', filename=user.picture_path) }}">
-    <hr> -->
     {% if user.posts %}
         {% for post in user.posts %}
             <div class="feed-post" id="{{ post.id }}">
