@@ -8,6 +8,8 @@ body {
 }
 
 nav {
+    position: fixed;
+    top: 0;
     width: 100%;
     height: 50px;
     background-color: #bc5a45;
@@ -22,6 +24,22 @@ a {
 
 a:hover {
     color: black;
+}
+
+.logo {
+    position: fixed;
+    top: 5px;
+    left: 15px;
+    width: 70px;
+    height: 40px;
+    border: 2px solid black;
+}
+
+.profile-link {
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    width: 70px;
 }
 
 /* Registration */

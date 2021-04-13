@@ -6,6 +6,15 @@
     <meta id="page" content="0">
 {% endblock %}
 
+{% block nav %}
+    <a href="{{ url_for('feed', user_id=user.id) }}">
+        <img class="logo" src="{{ url_for('static', filename='data/clone.png') }}">
+    </a>
+    <div class="profile-link">
+        <a href="{{ url_for('profile', user_id=session['user_id']) }}">{{ user }}</a>
+    </div>
+{% endblock %}
+
 {% block content %}
     <a href="{{ url_for('create', user_id=user.id) }}"><button>CREATE</button></a> <br>
     <hr>
