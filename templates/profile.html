@@ -29,6 +29,7 @@
         {% endfor %}
         {% if user.posts|length > 5 %}
             <button id="previous">Previous</button>
+            <span id="page_display">1</span>
             <button id="next">Next</button>
         {% endif %}
     {% else %}

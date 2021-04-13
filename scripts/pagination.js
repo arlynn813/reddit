@@ -1,5 +1,6 @@
 $(document).ready(function() {
     let page = $('#page');
+    let page_display = $('#page_display');
     let previous_button = $('#previous');
     let next_button = $('#next');
     paginate();
@@ -29,12 +30,14 @@ $(document).ready(function() {
     previous_button.click(function() {
         let page_idx = parseInt(page.attr('content'));
         page.attr('content', (page_idx - 1).toString());
+        page_display.text(page_idx);
         paginate();
     });
 
     next_button.click(function () {
         let page_idx = parseInt(page.attr('content'));
         page.attr('content', (page_idx + 1).toString());
+        page_display.text(page_idx + 2);
         paginate();
     });
 });
