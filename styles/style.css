@@ -1,4 +1,11 @@
 /* Global */
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
 
 /* Registration */
 #register_form > .row {
@@ -27,6 +34,14 @@
 }
 
 /* Post */
+.vote-container {
+    margin-left: -15px;
+}
+
+.vote-count {
+    margin-left: 5px;
+}
+
 .vote-btn {
     cursor: pointer;
     width: 20px;
@@ -34,4 +49,16 @@
 
 .downvote {
     transform: scaleY(-1);
+}
+
+.post-title {
+    margin-left: 30px;
+}
+
+.post-content {
+    width: 100%;
+    margin: 10px 0 20px 45px;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
 }

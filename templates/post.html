@@ -7,13 +7,23 @@
 {% endblock %}
 
 {% block content %}
-    <img class="vote-btn" {% if vote and vote.value == 1 %}src="{{ url_for('static', filename='data/arrow-active.png') }}"{% else %}src="{{ url_for('static', filename='data/arrow.png') }}"{% endif %} id="upvote">
-    <span id="vote_count">{{ post.vote_count }}</span>
-    <img class="vote-btn downvote" {% if vote and vote.value == -1 %}src="{{ url_for('static', filename='data/arrow-active.png') }}"{% else %}src="{{ url_for('static', filename='data/arrow.png') }}"{% endif %} id="downvote">
-    <hr>
-    <span>{{ post.title }}</span>
-    <hr>
-    <span>{{ post.content }}</span>
+    <div class="row mx-auto">
+        <div class="col-12 vote-container">
+            <div class="row mx-auto">
+                <img class="vote-btn" {% if vote and vote.value == 1 %}src="{{ url_for('static', filename='data/arrow-active.png') }}"{% else %}src="{{ url_for('static', filename='data/arrow.png') }}"{% endif %} id="upvote">
+            </div>
+            <div class="row mx-auto">
+                <span class="vote-count" id="vote_count">{{ post.vote_count }}</span>
+                <span class="post-title">{{ post.title }}</span>
+            </div>
+            <div class="row mx-auto">
+                <img class="vote-btn downvote" {% if vote and vote.value == -1 %}src="{{ url_for('static', filename='data/arrow-active.png') }}"{% else %}src="{{ url_for('static', filename='data/arrow.png') }}"{% endif %} id="downvote">
+            </div>
+        </div>
+    </div>
+    <div class="row mx-auto">
+        <p class="post-content">{{ post.content }}</p>
+    </div>
 
 <script type="text/javascript" src="{{ url_for('static', filename='scripts/post.js') }}"></script>
 {% endblock content %}
