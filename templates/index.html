@@ -16,11 +16,18 @@
                 <img class="logo" src="{{ url_for('static', filename='data/clone.png') }}">
             </a>
             <div class="profile-link">
-                <a href="{{ url_for('profile', user_id=session['user_id']) }}">{{ user }}</a>
+                {% if user.picture_path %}
+                        <a href="{{ url_for('profile', user_id=session['user_id']) }}">
+                        <img class ="profile-picture" src="{{ url_for('static', filename=user.picture_path) }}">
+                        </a>
+                {% else %}
+                       <a href="{{ url_for('profile', user_id=session['user_id']) }}">{{ user }}</a>
+                {% endif %}
                 <a href="{{ url_for('create', user_id=session['user_id']) }}"><button>CREATE</button></a>
             </div>
         {% endblock %}
     </nav>
+
     <div class="container">
         {% block content %}
         {% endblock %}
