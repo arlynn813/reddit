@@ -20,8 +20,9 @@ def register():
         if not user:
             picture = request.files['picture']
             picture_filename = picture.filename
-            os.mkdir(os.path.join(app.config['IMG_FOLDER'], user_id))
-            picture.save(os.path.join(app.config['IMG_FOLDER'], user_id, picture_filename))
+            if picture_filename:
+                os.mkdir(os.path.join(app.config['IMG_FOLDER'], user_id))
+                picture.save(os.path.join(app.config['IMG_FOLDER'], user_id, picture_filename))
             user = User.create(request.form['username'], request.form['email'], picture_filename)
         session['user_id'] = user.id
         return redirect(url_for('feed', user_id=user.id))
