@@ -10,15 +10,17 @@
     {% if user.posts %}
         {% for post in user.posts %}
             <div class="feed-post" id="{{ post.id }}">
-                <a href="{{ url_for('post', post_id=post.id) }}">
-                    <div class="row mx-auto">
-                        <div class="col-11">
+                <div class="row mx-auto">
+                    <div class="col-11">
+                        <a href="{{ url_for('post', post_id=post.id) }}">
                             <span>{{ post.title }} - Posted by {{ post.user }} {{ post.timestamp }}</span>
-                        </div>
-                        <div class="col-1">
-                            <button name="delete" value="{{ post.id }}">DELETE</button>
-                        </div>
+                        </a>
                     </div>
+                    <div class="col-1">
+                        <button name="delete" value="{{ post.id }}">DELETE</button>
+                    </div>
+                </div>
+                <a href="{{ url_for('post', post_id=post.id) }}">
                     <div class="row mx-auto">
                         <p class="post-content">{{ post.preview }}</p>
                     </div>
