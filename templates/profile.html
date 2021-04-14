@@ -12,7 +12,7 @@
             <div class="feed-post" id="{{ post.id }}">
                 <a href="{{ url_for('post', post_id=post.id) }}">
                     <div class="row mx-auto">
-                        <span>{{ post.title }} - Posted by {{ post.user }} {{ post.timestamp }}</span>
+                        <span>{{ post.title }}</span><span class="post-info">Posted by {{ post.user }} {{ post.timestamp }}</span>
                     </div>
                     <div class="row mx-auto">
                         <p class="post-content">{{ post.preview }}</p>

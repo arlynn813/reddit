@@ -110,6 +110,11 @@ textarea:focus {
     cursor: pointer;
 }
 
+.post-info {
+    font-style: italic;
+    margin-left: 20px;
+}
+
 /* Feed and Profile */
 .feed-post {
     display: none;
