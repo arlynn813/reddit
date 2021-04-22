@@ -14,6 +14,7 @@
         {% block nav %}
             <a href="{{ url_for('feed', user_id=session['user_id']) }}">
                 <img class="logo" src="{{ url_for('static', filename='data/clone.png') }}">
+                <input type="checkbox" id="color_mode_toggle">
             </a>
             <div class="profile-link">
                 {% if user.picture_filename %}
@@ -32,5 +33,7 @@
         {% block content %}
         {% endblock %}
     </div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/dark_mode.js') }}"></script>
 </body>
 </html>
