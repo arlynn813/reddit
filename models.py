@@ -148,11 +148,6 @@ class Post:
         hours_difference = 0
         days_difference = 0
 
-        # TODO: remove these print after prolonged testing
-        print(time_delta)
-        print(minutes_difference)
-        print(hours_difference)
-
         # Convert minutes to hours
         while minutes_difference >= 60 * 24:
             days_difference += 1
